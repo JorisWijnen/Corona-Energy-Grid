@@ -7,3 +7,4 @@ Repo for hackaton semester 6
 + Victor van Leeuwen
 + Tim Krijnen
 + Lotte Diesveld
++ Bas van den Eertwegh
