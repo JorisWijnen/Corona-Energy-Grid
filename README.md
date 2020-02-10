@@ -1,4 +1,4 @@
-# Corona-Energy-Grid
+# Corona-Energy-Grid-Backend
 Repo for group project semester 6
 
 # Contributors
