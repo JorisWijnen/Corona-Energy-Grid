@@ -6,3 +6,4 @@ Repo for hackaton semester 6
 + Wesley Vercoulen
 + Victor van Leeuwen
 + Tim Krijnen
++ Lotte Diesveld
