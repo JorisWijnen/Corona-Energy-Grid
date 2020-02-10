@@ -1,5 +1,5 @@
 # Corona-Energy-Grid
-Repo for hackaton semester 6
+Repo for group project semester 6
 
 # Contributors
 + Joris Wijnen
