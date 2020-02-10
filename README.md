@@ -5,3 +5,4 @@ Repo for hackaton semester 6
 + Joris Wijnen
 + Wesley Vercoulen
 + Victor van Leeuwen
++ Tim Krijnen
