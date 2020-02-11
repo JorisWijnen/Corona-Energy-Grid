@@ -1,4 +1,13 @@
 package com.corona.backend.repositories;
 
-public interface UserRepository {
+import com.corona.backend.models.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
+
+    User findUserByUsername(String username);
+    User findUserById(Long id);
+
 }
