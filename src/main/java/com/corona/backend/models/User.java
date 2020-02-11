@@ -31,6 +31,13 @@ public class User {
     @Column(nullable = false)
     private int customerNumber;
 
+    public void setStatus(Set<Status> status) {
+        this.status = status;
+    }
+
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_status", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "status_id"))
+    private Set<Status> status;
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
@@ -107,5 +114,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Status> getStatus() {
+        return status;
     }
 }

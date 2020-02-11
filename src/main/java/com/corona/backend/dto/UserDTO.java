@@ -26,8 +26,11 @@ public class UserDTO {
     @JsonProperty
     private Set<String> roles;
 
+    @JsonProperty
+    private Set<StatusDTO> status;
 
-    public UserDTO(String firstName, String lastName, String email, String zipCode, String houseNumber, int customerNumber, Set<String> roles) {
+
+    public UserDTO(String firstName, String lastName, String email, String zipCode, String houseNumber, int customerNumber, Set<String> roles, Set<StatusDTO> status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -35,6 +38,7 @@ public class UserDTO {
         this.houseNumber = houseNumber;
         this.customerNumber = customerNumber;
         this.roles = roles;
+        this.status = status;
     }
 
     public UserDTO() {
@@ -94,5 +98,13 @@ public class UserDTO {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public Set<StatusDTO> getStatus() {
+        return status;
+    }
+
+    public void setStatus(Set<StatusDTO> status) {
+        this.status = status;
     }
 }
