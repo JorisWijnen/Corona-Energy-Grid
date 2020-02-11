@@ -15,7 +15,7 @@ public class UserService {
 
     public User newUser(User user){
         userRepository.save(user);
-        User newuser = userRepository.findUserByUsername(user.getUsername());
+        User newuser = userRepository.findUserByEmail(user.getEmail());
         return newuser;
     }
     public Iterable<User> allusers(){
