@@ -11,8 +11,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.io.BufferedReader;
 
 @SpringBootApplication
 public class BackendApplication {
@@ -49,6 +52,11 @@ public class BackendApplication {
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
 
+            BufferedReader reader = new BufferedReader(new FileReader("enexis_electricity_01012010_mod.csv"));
+            String values;
+            while( (values = reader.readLine()) != null) {
+                System.out.println(values);
+            }
         };
     }
 
