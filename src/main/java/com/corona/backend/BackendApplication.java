@@ -25,8 +25,8 @@ public class BackendApplication {
         return args -> {
 
 
-            User user1 = new User("victor","victory"); //default
-            User user2 = new User("Piet","Pieters"); //default
+            User user1 = new User("victor","victory","fontys123","test@test.nl","5981KK","12a",1); //default
+            User user2 = new User("Piet","Pieters","fobba123","test@test.nl","5981CC","13",2); //default
 
             Role adminrole = new Role();
             Role defaultrole = new Role();

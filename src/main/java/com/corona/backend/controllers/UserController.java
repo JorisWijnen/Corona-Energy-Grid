@@ -44,7 +44,7 @@ public class UserController {
     @RequestMapping(value = RestURIConstant.currentUser, method = RequestMethod.GET)
     public @ResponseBody User current(){
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        final String username = (String) auth.getPrincipal();
-        return userRepository.findUserByUsername(username);
+        final String email = (String) auth.getPrincipal();
+        return userRepository.findUserByEmail(email);
     }
 }
