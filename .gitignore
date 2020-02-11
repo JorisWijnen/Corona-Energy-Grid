@@ -27,7 +27,6 @@ target/
 /.nb-gradle/
 build/
 
-<<<<<<< HEAD
 # Package Files #
 *.jar
 *.war
@@ -44,7 +43,7 @@ hs_err_pid*
 .idea/
 *.iml
 *.iws
-=======
+
 ### VS Code ###
 .vscode/
->>>>>>> master
+
