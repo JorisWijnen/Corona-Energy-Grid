@@ -1,29 +1,55 @@
 package com.corona.backend.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "role")
-public class Role {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="role_name")
-    private String name;
+    @Column(nullable = false)
+    private String username;
 
-    public Role() { }
+    @Column(nullable = false)
+    private String password;
 
-    public Role(String name) {
-        this.name = name;
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public String getName() {
-        return name;
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public User(){
+
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
