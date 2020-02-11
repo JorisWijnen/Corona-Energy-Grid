@@ -26,10 +26,16 @@ public class User {
     private String zipCode;
 
     @Column(nullable = false)
+    private String street;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
     private String houseNumber;
 
     @Column(nullable = false)
-    private int customerNumber;
+    private String customerCode;
 
     public void setStatus(Set<Status> status) {
         this.status = status;
@@ -47,14 +53,16 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String firstName, String lastName, String password, String email, String zipCode, String houseNumber, int customerNumber  ) {
+    public User(String firstName, String lastName, String password, String email, String zipCode, String street, String city, String houseNumber, String customerCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email= email;
         this.zipCode = zipCode;
+        this.street = street;
+        this.city = city;
         this.houseNumber = houseNumber;
-        this.customerNumber = customerNumber;
+        this.customerCode = customerCode;
     }
 
     public User(){
@@ -72,8 +80,8 @@ public class User {
         return lastName;
     }
 
-    public int getCustomerNumber() {
-        return customerNumber;
+    public String getCustomerCode() {
+        return customerCode;
     }
 
     public String getHouseNumber() {
@@ -100,8 +108,8 @@ public class User {
         this.email = email;
     }
 
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
     }
 
     public void setHouseNumber(String houseNumber) {

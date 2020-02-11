@@ -8,6 +8,7 @@ import com.corona.backend.repositories.RoleRepository;
 import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.AuthenticationUtils;
+import com.corona.backend.utils.RandomString;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,9 +30,10 @@ public class BackendApplication {
     public CommandLineRunner demo(UserRepository userRepository, RoleRepository roleRepository, StatusRepository statusRepository){
         return args -> {
 
-
-            User user1 = new User("victor","victory","fontys123","test@test.com","5981KK","12a",1); //default
-            User user2 = new User("Piet","Pieters","fobba123","test@test.nl","5981CC","13",2); //default
+            RandomString rdm = new RandomString();
+            System.out.println(rdm.getAlphaNumericString(8));
+            User user1 = new User("victor","victory","fontys123","test@test.com","5981KK", "dorpsstraat", "PANNINGEN", "12a",rdm.getAlphaNumericString(8)); //default
+            User user2 = new User("Piet","Pieters","fobba123","test@test.nl","5981CC","kerkstraat", "WEERT", "13", rdm.getAlphaNumericString(8)); //default
 
             Role adminrole = new Role();
             Role defaultrole = new Role();
@@ -79,7 +81,6 @@ public class BackendApplication {
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
-
 
 
 
