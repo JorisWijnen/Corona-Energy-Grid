@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@SpringBootApplication (exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class BackendApplication {
 
     public static void main(String[] args) {
