@@ -1,6 +1,7 @@
 package com.corona.backend.controllers;
 
 import com.corona.backend.dto.StatusDTO;
+import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.services.StatusService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -61,5 +63,11 @@ public class UserController {
     private Object getCurrentAuthorizedUser(Class returnType) {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userService.getCurrentUser(auth, returnType);
+    }
+
+    @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
+    public @ResponseBody
+    Set<StatusDTO> getStatus (@RequestParam("id")Long id) {
+        return statusService.getUserStatus(id);
     }
 }
