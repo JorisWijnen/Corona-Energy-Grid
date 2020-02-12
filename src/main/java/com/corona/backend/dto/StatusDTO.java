@@ -2,12 +2,12 @@ package com.corona.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class StatusDTO {
 
     @JsonProperty
-    private Date date;
+    private LocalDate date;
 
     @JsonProperty
     private int consumption;
@@ -15,7 +15,10 @@ public class StatusDTO {
     @JsonProperty
     private int production;
 
-    public StatusDTO(Date date, int consumption, int production) {
+    @JsonProperty
+    private String label;
+
+    public StatusDTO(LocalDate date, int consumption, int production) {
         this.date = date;
         this.consumption = consumption;
         this.production = production;
@@ -24,12 +27,16 @@ public class StatusDTO {
     public StatusDTO() {
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public int getConsumption() {
@@ -40,11 +47,19 @@ public class StatusDTO {
         this.consumption = consumption;
     }
 
+    public void addConsumption(int addition) {
+        this.consumption += addition;
+    }
+
     public int getProduction() {
         return production;
     }
 
     public void setProduction(int production) {
         this.production = production;
+    }
+
+    public void addProduction(int addition) {
+        this.production += addition;
     }
 }
