@@ -1,24 +1,27 @@
 package com.corona.backend.controllers;
 
+import com.corona.backend.dto.StatusDTO;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
+import com.corona.backend.services.StatusService;
 import com.corona.backend.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
+    private final StatusService statusService;
     private final UserRepository userRepository;
 
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, StatusService statusService, UserRepository userRepository) {
         this.userService = userService;
+        this.statusService = statusService;
         this.userRepository = userRepository;
     }
 
@@ -46,5 +49,17 @@ public class UserController {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final String email = (String) auth.getPrincipal();
         return userRepository.findUserByEmail(email);
+    }
+
+    @RequestMapping(value = RestURIConstant.getUserStatus, method = RequestMethod.GET)
+    public @ResponseBody
+    List<StatusDTO> getUserStatus (@RequestParam("id")Long id) {
+        User user = (User) getCurrentAuthorizedUser(User.class);
+        return statusService.getStatusById(user.getId());
+    }
+
+    private Object getCurrentAuthorizedUser(Class returnType) {
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userService.getCurrentUser(auth, returnType);
     }
 }
