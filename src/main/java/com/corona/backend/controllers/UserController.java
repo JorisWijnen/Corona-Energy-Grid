@@ -6,12 +6,18 @@ import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.services.StatusService;
 import com.corona.backend.services.UserService;
+import com.corona.backend.utils.StatusPeriod;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -67,7 +73,7 @@ public class UserController {
 
     @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
     public @ResponseBody
-    Set<StatusDTO> getStatus (@RequestParam("id")Long id) {
-        return statusService.getUserStatus(id);
+    Set<StatusDTO> getStatusForPeriod (@RequestParam("id")Long id, @RequestParam("statusPeriod") StatusPeriod statusPeriod, @RequestParam("currentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
+        return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
 }

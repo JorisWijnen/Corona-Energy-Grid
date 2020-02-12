@@ -5,9 +5,11 @@ import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.repositories.UserRepository;
+import com.corona.backend.utils.StatusPeriod;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,13 +43,23 @@ public class StatusService {
         }
     }
 
-    public Set<StatusDTO> getUserStatus(Long id){
+    public Set<StatusDTO> getStatusForPeriod(Long id, StatusPeriod statusPeriod, LocalDate currentDate){
         try{
             User user = userRepository.findUserById(id);
             Set<StatusDTO> result = new HashSet<>();
             for (Status status : user.getStatus()){
                 result.add(modelMapper.map(status, StatusDTO.class));
             }
+
+            switch(statusPeriod) {
+                case YEAR:
+                    LocalDate.now().minusMonths(12);
+                    break;
+                default:
+                    // code block
+            }
+
+
             return result;
         }
         catch(Exception ex){

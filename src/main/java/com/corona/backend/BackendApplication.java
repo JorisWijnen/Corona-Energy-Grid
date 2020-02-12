@@ -68,15 +68,15 @@ public class BackendApplication {
             Status status3 = new Status();
 
 
-            status1.setDate(new Date());
+            status1.setDate(LocalDate.now());
             status1.setConsumption(100);
             status1.setProduction(66);
 
-            status2.setDate(new Date());
+            status2.setDate(LocalDate.now());
             status2.setConsumption(100);
             status2.setProduction(122);
 
-            status3.setDate(new Date());
+            status3.setDate(LocalDate.now());
             status3.setConsumption(111);
             status3.setProduction(133);
 

@@ -1,6 +1,7 @@
 package com.corona.backend.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -11,7 +12,7 @@ public class Status {
     private Long id;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate localDate;
 
     @Column(nullable = false)
     private int consumption;
@@ -20,8 +21,8 @@ public class Status {
     private int production;
 
 
-    public Status(Date date, int consumption, int production) {
-        this.date = date;
+    public Status(LocalDate localDate, int consumption, int production) {
+        this.localDate = localDate;
         this.consumption = consumption;
         this.production = production;
     }
@@ -37,12 +38,12 @@ public class Status {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDate getDate() {
+        return localDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     public int getConsumption() {
