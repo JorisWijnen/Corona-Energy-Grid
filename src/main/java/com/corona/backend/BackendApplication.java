@@ -9,6 +9,7 @@ import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.AuthenticationUtils;
 import com.corona.backend.utils.RandomString;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,6 +28,12 @@ public class BackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
     @Bean
     public CommandLineRunner demo(UserRepository userRepository, RoleRepository roleRepository, StatusRepository statusRepository){
         return args -> {
