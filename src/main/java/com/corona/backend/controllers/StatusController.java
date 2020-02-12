@@ -2,6 +2,7 @@ package com.corona.backend.controllers;
 
 import com.corona.backend.dto.StatusDTO;
 import com.corona.backend.dto.UserDTO;
+import com.corona.backend.models.User;
 import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.services.StatusService;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,4 @@ public class StatusController {
         this.statusService = statusService;
         this.statusRepository = statusRepository;
     }
-
-    @RequestMapping(value = RestURIConstant.getUserStatus, method = RequestMethod.GET)
-    public @ResponseBody List<StatusDTO> getUserStatus(Long id){
-
-        return statusService.getStatusById(id);
-    }
-
-
 }

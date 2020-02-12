@@ -6,5 +6,5 @@ public class RestURIConstant {
     public static final String deleteUser = "/UserController/delete";
     public static final String currentUser = "/UserController/current";
 
-    public static final String getUserStatus = "/StatusController/status";
+    public static final String getUserStatus = "/UserController/status";
 }
