@@ -4,12 +4,15 @@ import com.corona.backend.dto.StatusDTO;
 import com.corona.backend.dto.UserDTO;
 import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.services.StatusService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+@Controller
 public class StatusController {
 
     private final StatusService statusService;
@@ -21,7 +24,7 @@ public class StatusController {
     }
 
     @RequestMapping(value = RestURIConstant.getUserStatus, method = RequestMethod.GET)
-    public @ResponseBody List<StatusDTO> getUserStatus(Long id){
+    public @ResponseBody List<StatusDTO> getUserStatus(@RequestParam("id")Long id){
 
         return statusService.getStatusById(id);
     }

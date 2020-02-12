@@ -5,11 +5,12 @@ import com.corona.backend.models.Status;
 import com.corona.backend.repositories.StatusRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@Service
 public class StatusService {
 
     private final StatusRepository statusRepository;
