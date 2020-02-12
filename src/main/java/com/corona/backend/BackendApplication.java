@@ -12,6 +12,7 @@ import com.corona.backend.utils.RandomString;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@SpringBootApplication
+@SpringBootApplication (exclude = {SecurityAutoConfiguration.class})
 public class BackendApplication {
 
     public static void main(String[] args) {
@@ -57,6 +58,8 @@ public class BackendApplication {
 
             Status status1 = new Status();
             Status status2 = new Status();
+            Status status3 = new Status();
+
 
             status1.setDate(new Date());
             status1.setConsumption(100);
@@ -66,11 +69,16 @@ public class BackendApplication {
             status2.setConsumption(100);
             status2.setProduction(122);
 
+            status3.setDate(new Date());
+            status3.setConsumption(111);
+            status3.setProduction(133);
+
             Set<Status> status_dashboard1 = new HashSet<>();
             Set<Status> status_dashboard2 = new HashSet<>();
 
             status_dashboard1.add(status1);
             status_dashboard2.add(status2);
+            status_dashboard2.add(status3);
 
 
             user1.setStatus(status_dashboard1);
@@ -78,6 +86,7 @@ public class BackendApplication {
 
             statusRepository.save(status1);
             statusRepository.save(status2);
+            statusRepository.save(status3);
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
