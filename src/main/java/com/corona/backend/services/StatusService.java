@@ -171,8 +171,9 @@ public class StatusService {
                 result.addAll(Arrays.asList(lastLastMonth, lastMonth, currentMonth));
                 break;
             case MONTH:
-                break;
 
+            case WEEK:
+                break;
 
         }
         return result;
