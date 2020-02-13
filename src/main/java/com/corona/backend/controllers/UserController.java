@@ -73,7 +73,7 @@ public class UserController {
 
     @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
     public @ResponseBody
-    Set<StatusDTO> getStatusForPeriod (@RequestParam("id")Long id, @RequestParam("statusPeriod") StatusPeriod statusPeriod, @RequestParam("currentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
+    List<StatusDTO> getStatusForPeriod (@RequestParam("id")Long id, @RequestParam("statusPeriod") StatusPeriod statusPeriod, @RequestParam("currentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
         return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
 }
