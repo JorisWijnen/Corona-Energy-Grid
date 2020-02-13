@@ -10,12 +10,12 @@ public class StatusDTO {
     private Date date;
 
     @JsonProperty
-    private int consumption;
+    private double consumption;
 
     @JsonProperty
-    private int production;
+    private double production;
 
-    public StatusDTO(Date date, int consumption, int production) {
+    public StatusDTO(Date date, double consumption, double production) {
         this.date = date;
         this.consumption = consumption;
         this.production = production;
@@ -32,19 +32,19 @@ public class StatusDTO {
         this.date = date;
     }
 
-    public int getConsumption() {
+    public double getConsumption() {
         return consumption;
     }
 
-    public void setConsumption(int consumption) {
+    public void setConsumption(double consumption) {
         this.consumption = consumption;
     }
 
-    public int getProduction() {
+    public double getProduction() {
         return production;
     }
 
-    public void setProduction(int production) {
+    public void setProduction(double production) {
         this.production = production;
     }
 }
