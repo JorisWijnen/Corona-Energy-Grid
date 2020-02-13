@@ -40,14 +40,14 @@ public class StatusService {
         }
     }
 
-    public Set<StatusDTO> getStatusForPeriod(Long id, StatusPeriod statusPeriod, LocalDate currentDate) {
+    public List<StatusDTO> getStatusForPeriod(Long id, StatusPeriod statusPeriod, LocalDate currentDate) {
         try {
             User user = userRepository.findUserById(id);
-            Set<StatusDTO> result = new HashSet<>();
+            Set<StatusDTO> statusSet = new HashSet<>();
             for (Status status : user.getStatus()) {
-                result.add(modelMapper.map(status, StatusDTO.class));
+                statusSet.add(modelMapper.map(status, StatusDTO.class));
             }
-            LocalDate beginDate;
+            LocalDate beginDate = null;
             switch (statusPeriod) {
                 case YEAR:
                     beginDate = LocalDate.now().minusMonths(12);
@@ -63,12 +63,20 @@ public class StatusService {
                 default:
                     // code block
             }
+            if(beginDate != null) {
+                var result = sortStatusForPeriod(beginDate, currentDate, statusSet, statusPeriod);
+
+                return result;
+            }
 
 
-            return result;
+
+
+
+             return null;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new HashSet<>();
+            return null;
         }
     }
 
@@ -163,8 +171,11 @@ public class StatusService {
                 }
                 result.addAll(Arrays.asList(currentMonth, lastLastMonth, lastMonth));
                 break;
+            case MONTH:
+                break;
+
 
         }
-        return null;
+        return result;
     }
 }
