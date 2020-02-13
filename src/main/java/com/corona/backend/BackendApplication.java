@@ -56,8 +56,8 @@ public class BackendApplication {
             user1.setRoles(roles1);
             user2.setRoles(roles2);
 
-            user1.setPassword(new AuthenticationUtils().encode(user1.getPassword()));
-            user2.setPassword(new AuthenticationUtils().encode(user2.getPassword()));
+            user1.setPassword(new AuthenticationUtils().encode(user1.getPasswordHash()));
+            user2.setPassword(new AuthenticationUtils().encode(user2.getPasswordHash()));
 
             roleRepository.save(adminrole);
             roleRepository.save(defaultrole);

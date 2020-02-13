@@ -5,30 +5,67 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RegisterDTO {
 
     @JsonProperty
-    private String email;
+    private String firstName;
+
+    @JsonProperty
+    private String lastName;
 
     @JsonProperty
     private String password;
 
     @JsonProperty
-    private int customerNumber;
+    private String email;
+
+    @JsonProperty
+    private String zipCode;
+
+    @JsonProperty
+    private String street;
+
+    @JsonProperty
+    private String city;
 
     @JsonProperty
     private String houseNumber;
 
     @JsonProperty
-    private String zipCode;
+    private String customerCode;
 
-    public RegisterDTO(String email, String password, int customerNumber, String houseNumber, String zipCode) {
+    public RegisterDTO(String firstName, String lastName, String email, String password, String customerCode, String street, String city, String houseNumber, String zipCode) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.customerNumber = customerNumber;
+        this.customerCode = customerCode;
+        this.street = street;
+        this.city = city;
         this.houseNumber = houseNumber;
         this.zipCode = zipCode;
     }
 
-    public RegisterDTO() {
+    public String getStreet() {
+        return street;
     }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getLastName() { return lastName; }
+
+    public void setLastName(String lastName) {this.lastName = lastName;}
+
+    public String getFirstName() { return firstName;}
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
     public String getEmail() {
         return email;
@@ -46,12 +83,12 @@ public class RegisterDTO {
         this.password = password;
     }
 
-    public int getCustomerNumber() {
-        return customerNumber;
+    public String getCustomerCode() {
+        return customerCode;
     }
 
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
     }
 
     public String getHouseNumber() {

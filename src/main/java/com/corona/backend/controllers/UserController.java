@@ -1,5 +1,6 @@
 package com.corona.backend.controllers;
 
+import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.StatusDTO;
 import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
@@ -7,6 +8,7 @@ import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.services.StatusService;
 import com.corona.backend.services.UserService;
 import com.corona.backend.utils.StatusPeriod;
+import org.json.JSONObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,17 +79,28 @@ public class UserController {
         return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
 
-    @PostMapping(value = RestURIConstant.userRegistration)
-    public @ResponseBody
-    boolean userRegistration(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
-                             @RequestParam("password") String password,
-                             @RequestParam("email") String email,
-                             @RequestParam("zipcode") String zipCode,
-                             @RequestParam("street") String street,
-                             @RequestParam("city") String city,
-                             @RequestParam("housenumber") String houseNumber,
-                             @RequestParam("costumercode") String costumerCode){
-
-        return false;
+    @RequestMapping(value = RestURIConstant.userRegistration, method = RequestMethod.POST)
+    public String userRegister(@RequestBody RegisterDTO user) {
+        try {
+            return userService.registerUser(user);
+        } catch (Exception e) {
+            return "Failed to register: " + e.getMessage();
+        }
     }
+
+//    @PostMapping(value = RestURIConstant.userRegistration)
+//    public @ResponseBody
+//    boolean userRegistration(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
+//                             @RequestParam("password") String password,
+//                             @RequestParam("email") String email,
+//                             @RequestParam("zipcode") String zipCode,
+//                             @RequestParam("street") String street,
+//                             @RequestParam("city") String city,
+//                             @RequestParam("housenumber") String houseNumber,
+//                             @RequestParam("costumercode") String costumerCode){
+//
+//
+//
+//        return false;
+//    }
 }

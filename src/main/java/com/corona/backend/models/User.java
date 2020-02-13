@@ -16,8 +16,8 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "password_hash", nullable = false)
+    private String hash;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -53,10 +53,10 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String firstName, String lastName, String password, String email, String zipCode, String street, String city, String houseNumber, String customerCode) {
+    public User(String firstName, String lastName, String password_hash, String email, String zipCode, String street, String city, String houseNumber, String customerCode) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
+        this.hash = password_hash;
         this.email= email;
         this.zipCode = zipCode;
         this.street = street;
@@ -66,8 +66,8 @@ public class User {
     }
 
     public User(){
-
     }
+
     public Long getId() {
         return id;
     }
@@ -92,8 +92,8 @@ public class User {
         return zipCode;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return hash;
     }
 
     public Set<Role> getRoles() {
@@ -120,8 +120,8 @@ public class User {
         this.zipCode = zipCode;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password_hash) {
+        this.hash = password_hash;
     }
 
     public Set<Status> getStatus() {
