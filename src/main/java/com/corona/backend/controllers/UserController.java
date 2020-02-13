@@ -11,11 +11,13 @@ import com.corona.backend.utils.StatusPeriod;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -82,11 +84,13 @@ public class UserController {
         return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
 
-    @RequestMapping(value = RestURIConstant.userRegistration, method = RequestMethod.POST)
-    public String userRegister(@RequestBody String user) {
+    //@RequestMapping(value = RestURIConstant.userRegistration, method = RequestMethod.POST)
+    @PostMapping(value = RestURIConstant.userRegistration)
+    public @ResponseBody String userRegister(@RequestBody String user) {
         try {
             Gson gson = new Gson();
             var userObject = gson.fromJson(user, RegisterDTO.class);
+            System.out.println("Received: " + user);
             return userService.registerUser(userObject);
         } catch (Exception e) {
             return "Failed to register: " + e.getMessage();
