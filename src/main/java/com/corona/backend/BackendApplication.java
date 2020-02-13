@@ -37,6 +37,10 @@ public class BackendApplication {
             User user1 = new User("victor","victory","fontys123","test@test.com","5981KK", "dorpsstraat", "PANNINGEN", "12a",rdm.getAlphaNumericString(8)); //default
             User user2 = new User("Piet","Pieters","fobba123","test@test.nl","5981CC","kerkstraat", "WEERT", "13", rdm.getAlphaNumericString(8)); //default
 
+            BufferedReader reader = new BufferedReader(new FileReader("enexis_electricity_01012010_mod.csv"));
+            value1 = reader.readLine();
+            value2 = reader.readLine();
+
             Role adminrole = new Role();
             Role defaultrole = new Role();
             adminrole.setName("ADMIN_USER");
@@ -83,11 +87,6 @@ public class BackendApplication {
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
-
-            BufferedReader reader = new BufferedReader(new FileReader("enexis_electricity_01012010_mod.csv"));
-            for(int i = 0; i < 2; i++) {
-                System.out.println();
-            }
         };
     }
 
