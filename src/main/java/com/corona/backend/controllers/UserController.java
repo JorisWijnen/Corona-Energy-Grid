@@ -76,4 +76,18 @@ public class UserController {
     List<StatusDTO> getStatusForPeriod (@RequestParam("id")Long id, @RequestParam("statusPeriod") StatusPeriod statusPeriod, @RequestParam("currentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
         return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
+
+    @PostMapping(value = RestURIConstant.userRegistration)
+    public @ResponseBody
+    boolean userRegistration(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
+                             @RequestParam("password") String password,
+                             @RequestParam("email") String email,
+                             @RequestParam("zipcode") String zipCode,
+                             @RequestParam("street") String street,
+                             @RequestParam("city") String city,
+                             @RequestParam("housenumber") String houseNumber,
+                             @RequestParam("costumercode") String costumerCode){
+
+        return false;
+    }
 }
