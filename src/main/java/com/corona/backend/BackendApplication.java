@@ -39,10 +39,10 @@ public class BackendApplication {
             reader.readLine();
             String value1 = reader.readLine();
             String value2 = reader.readLine();
-            String[] array1 = value1.split(",");
-            String[] array2 = value2.split(",");
-            User user1 = new User("victor","victory","fontys123","test@test.com",array1[CsvValues.ZIPCODE.getValue()], array1[CsvValues.STREET.getValue()], array1[CsvValues.CITY.getValue()], array1[CsvValues.HOUSE_NUMBER.getValue()],rdm.getAlphaNumericString(8)); //default
-            User user2 = new User("Piet","Pieters","fobba123","test@test.nl",array2[CsvValues.ZIPCODE.getValue()],array2[CsvValues.STREET.getValue()], array2[CsvValues.CITY.getValue()], array2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
+            String[] data1 = value1.split(",");
+            String[] data2 = value2.split(",");
+            User user1 = new User("victor","victory","fontys123","test@test.com",data1[CsvValues.ZIPCODE.getValue()], data1[CsvValues.STREET.getValue()], data1[CsvValues.CITY.getValue()], data1[CsvValues.HOUSE_NUMBER.getValue()],rdm.getAlphaNumericString(8)); //default
+            User user2 = new User("Piet","Pieters","fobba123","test@test.nl",data2[CsvValues.ZIPCODE.getValue()],data2[CsvValues.STREET.getValue()], data2[CsvValues.CITY.getValue()], data2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
 
 
 
@@ -73,12 +73,12 @@ public class BackendApplication {
 
 
             status1.setDate(new Date());
-            status1.setConsumption(100);
-            status1.setProduction(66);
+            status1.setConsumption(Double.parseDouble(data1[CsvValues.CONSUME.getValue()]));
+            status1.setProduction(Double.parseDouble(data1[CsvValues.PRODUCE.getValue()]));
 
             status2.setDate(new Date());
-            status2.setConsumption(100);
-            status2.setProduction(122);
+            status2.setConsumption(Double.parseDouble(data2[CsvValues.CONSUME.getValue()]));
+            status2.setProduction(Double.parseDouble(data2[CsvValues.PRODUCE.getValue()]));
 
             status3.setDate(new Date());
             status3.setConsumption(111);
