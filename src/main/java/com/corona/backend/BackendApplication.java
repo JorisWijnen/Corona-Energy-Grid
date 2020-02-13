@@ -15,14 +15,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-
+import java.io.FileReader;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.BufferedReader;
+import com.corona.backend.utils.CsvValues;
 
-@SpringBootApplication (exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class BackendApplication {
 
     public static void main(String[] args) {
@@ -40,8 +41,18 @@ public class BackendApplication {
 
             RandomString rdm = new RandomString();
             System.out.println(rdm.getAlphaNumericString(8));
-            User user1 = new User("victor","victory","fontys123","test@test.com","5981KK", "dorpsstraat", "PANNINGEN", "12a",rdm.getAlphaNumericString(8)); //default
-            User user2 = new User("Piet","Pieters","fobba123","test@test.nl","5981CC","kerkstraat", "WEERT", "13", rdm.getAlphaNumericString(8)); //default
+            BufferedReader reader = new BufferedReader(new FileReader("enexis_electricity_01012010_mod.csv"));
+            // Do one readLine to skip the first line of column headers
+            reader.readLine();
+            String value1 = reader.readLine();
+            String value2 = reader.readLine();
+            String[] data1 = value1.split(",");
+            String[] data2 = value2.split(",");
+            User user1 = new User("victor","victory","fontys123","test@test.com",data1[CsvValues.ZIPCODE.getValue()], data1[CsvValues.STREET.getValue()], data1[CsvValues.CITY.getValue()], data1[CsvValues.HOUSE_NUMBER.getValue()],rdm.getAlphaNumericString(8)); //default
+            User user2 = new User("Piet","Pieters","fobba123","test@test.nl",data2[CsvValues.ZIPCODE.getValue()],data2[CsvValues.STREET.getValue()], data2[CsvValues.CITY.getValue()], data2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
+
+
+
 
             Role adminrole = new Role();
             Role defaultrole = new Role();
@@ -68,15 +79,16 @@ public class BackendApplication {
             Status status3 = new Status();
 
 
-            status1.setDate(LocalDate.now());
-            status1.setConsumption(100);
-            status1.setProduction(66);
+            status1.setDate(new Date());
+            status1.setConsumption(Double.parseDouble(data1[CsvValues.CONSUME.getValue()]));
+            status1.setProduction(Double.parseDouble(data1[CsvValues.PRODUCE.getValue()]));
 
-            status2.setDate(LocalDate.now());
-            status2.setConsumption(100);
-            status2.setProduction(122);
+            status2.setDate(new Date());
+            status2.setConsumption(Double.parseDouble(data2[CsvValues.CONSUME.getValue()]));
+            status2.setProduction(Double.parseDouble(data2[CsvValues.PRODUCE.getValue()]));
 
-            status3.setDate(LocalDate.now());
+
+            status3.setDate(new Date());
             status3.setConsumption(111);
             status3.setProduction(133);
 
@@ -97,15 +109,6 @@ public class BackendApplication {
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
-
-
-
-
-
-
-
-
-
         };
     }
 

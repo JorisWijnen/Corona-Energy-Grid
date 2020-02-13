@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,17 +65,14 @@ public class StatusService {
                 default:
                     // code block
             }
-            if(beginDate != null) {
+            if (beginDate != null) {
                 var result = sortStatusForPeriod(beginDate, currentDate, statusSet, statusPeriod);
 
                 return result;
             }
 
 
-
-
-
-             return null;
+            return null;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
@@ -83,23 +82,23 @@ public class StatusService {
 
     private List<StatusDTO> sortStatusForPeriod(LocalDate beginDate, LocalDate endDate, Set<StatusDTO> statuses, StatusPeriod statusPeriod) {
         List<StatusDTO> result = new ArrayList<>();
-        var filtered = statuses.stream().filter((status) -> status.getDate().compareTo(beginDate) >= 0 && status.getDate().compareTo(endDate) <= 0).collect(Collectors.toList());
+        var filtered = statuses.stream().filter((status) -> status.getLocalDate().compareTo(beginDate) >= 0 && status.getLocalDate().compareTo(endDate) <= 0).collect(Collectors.toList());
         switch (statusPeriod) {
             case YEAR:
-                StatusDTO january = new StatusDTO();
-                StatusDTO feburary = new StatusDTO();
-                StatusDTO march = new StatusDTO();
-                StatusDTO april = new StatusDTO();
-                StatusDTO may = new StatusDTO();
-                StatusDTO june = new StatusDTO();
-                StatusDTO july = new StatusDTO();
-                StatusDTO august = new StatusDTO();
-                StatusDTO september = new StatusDTO();
-                StatusDTO october = new StatusDTO();
-                StatusDTO november = new StatusDTO();
-                StatusDTO december = new StatusDTO();
+                StatusDTO january = new StatusDTO(getMonthDisplayName(Month.JANUARY));
+                StatusDTO feburary = new StatusDTO(getMonthDisplayName(Month.FEBRUARY));
+                StatusDTO march = new StatusDTO(getMonthDisplayName(Month.MARCH));
+                StatusDTO april = new StatusDTO(getMonthDisplayName(Month.APRIL));
+                StatusDTO may = new StatusDTO(getMonthDisplayName(Month.MAY));
+                StatusDTO june = new StatusDTO(getMonthDisplayName(Month.JUNE));
+                StatusDTO july = new StatusDTO(getMonthDisplayName(Month.JULY));
+                StatusDTO august = new StatusDTO(getMonthDisplayName(Month.AUGUST));
+                StatusDTO september = new StatusDTO(getMonthDisplayName(Month.SEPTEMBER));
+                StatusDTO october = new StatusDTO(getMonthDisplayName(Month.OCTOBER));
+                StatusDTO november = new StatusDTO(getMonthDisplayName(Month.NOVEMBER));
+                StatusDTO december = new StatusDTO(getMonthDisplayName(Month.DECEMBER));
                 for (StatusDTO statusDTO : filtered) {
-                    switch (statusDTO.getDate().getMonthValue()) {
+                    switch (statusDTO.getLocalDate().getMonthValue()) {
                         case 1:
                             january.addConsumption(statusDTO.getConsumption());
                             january.addProduction(statusDTO.getProduction());
@@ -153,11 +152,11 @@ public class StatusService {
                 result.addAll(Arrays.asList(january, feburary, march, april, may, june, july, august, september, october, november, december));
                 break;
             case THREEMONTHS:
-                StatusDTO currentMonth = new StatusDTO();
-                StatusDTO lastMonth = new StatusDTO();
-                StatusDTO lastLastMonth = new StatusDTO();
+                StatusDTO currentMonth = new StatusDTO(getMonthDisplayName(LocalDate.now().getMonth()));
+                StatusDTO lastMonth = new StatusDTO(getMonthDisplayName(LocalDate.now().minusMonths(1).getMonth()));
+                StatusDTO lastLastMonth = new StatusDTO(getMonthDisplayName(LocalDate.now().minusMonths(2).getMonth()));
                 for (StatusDTO statusDTO : filtered) {
-                    var month = statusDTO.getDate().getMonthValue();
+                    var month = statusDTO.getLocalDate().getMonthValue();
                     if (month == LocalDate.now().getMonthValue()) {
                         currentMonth.addProduction(statusDTO.getProduction());
                         currentMonth.addConsumption(statusDTO.getConsumption());
@@ -169,7 +168,7 @@ public class StatusService {
                         lastLastMonth.addConsumption(statusDTO.getConsumption());
                     }
                 }
-                result.addAll(Arrays.asList(currentMonth, lastLastMonth, lastMonth));
+                result.addAll(Arrays.asList(lastLastMonth, lastMonth, currentMonth));
                 break;
             case MONTH:
                 break;
@@ -177,5 +176,10 @@ public class StatusService {
 
         }
         return result;
+    }
+
+    private String getMonthDisplayName(Month month) {
+        return month.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+
     }
 }
