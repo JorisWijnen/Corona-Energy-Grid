@@ -15,13 +15,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.io.BufferedReader;
+import com.corona.backend.utils.CsvValues;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class BackendApplication {
@@ -35,12 +34,18 @@ public class BackendApplication {
 
             RandomString rdm = new RandomString();
             System.out.println(rdm.getAlphaNumericString(8));
-            User user1 = new User("victor","victory","fontys123","test@test.com","5981KK", "dorpsstraat", "PANNINGEN", "12a",rdm.getAlphaNumericString(8)); //default
-            User user2 = new User("Piet","Pieters","fobba123","test@test.nl","5981CC","kerkstraat", "WEERT", "13", rdm.getAlphaNumericString(8)); //default
-
             BufferedReader reader = new BufferedReader(new FileReader("enexis_electricity_01012010_mod.csv"));
-            value1 = reader.readLine();
-            value2 = reader.readLine();
+            // Do one readLine to skip the first line of column headers
+            reader.readLine();
+            String value1 = reader.readLine();
+            String value2 = reader.readLine();
+            String[] array1 = value1.split(",");
+            String[] array2 = value2.split(",");
+            User user1 = new User("victor","victory","fontys123","test@test.com",array1[CsvValues.ZIPCODE.getValue()], array1[CsvValues.STREET.getValue()], array1[CsvValues.CITY.getValue()], array1[CsvValues.HOUSE_NUMBER.getValue()],rdm.getAlphaNumericString(8)); //default
+            User user2 = new User("Piet","Pieters","fobba123","test@test.nl",array2[CsvValues.ZIPCODE.getValue()],array2[CsvValues.STREET.getValue()], array2[CsvValues.CITY.getValue()], array2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
+
+
+
 
             Role adminrole = new Role();
             Role defaultrole = new Role();
