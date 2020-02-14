@@ -14,13 +14,13 @@ public class Status {
     private Date date;
 
     @Column(nullable = false)
-    private int consumption;
+    private double consumption;
 
     @Column(nullable = false)
-    private int production;
+    private double production;
 
 
-    public Status(Date date, int consumption, int production) {
+    public Status(Date date, double consumption, double production) {
         this.date = date;
         this.consumption = consumption;
         this.production = production;
@@ -45,19 +45,19 @@ public class Status {
         this.date = date;
     }
 
-    public int getConsumption() {
+    public double getConsumption() {
         return consumption;
     }
 
-    public void setConsumption(int consumption) {
+    public void setConsumption(double consumption) {
         this.consumption = consumption;
     }
 
-    public int getProduction() {
+    public double getProduction() {
         return production;
     }
 
-    public void setProduction(int production) {
+    public void setProduction(double production) {
         this.production = production;
     }
 }
