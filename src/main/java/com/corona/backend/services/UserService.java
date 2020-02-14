@@ -44,7 +44,7 @@ public class UserService {
         User newuser = userRepository.findUserByEmail(user.getEmail());
         return newuser;
     }
-    public Iterable<User> allusers(){
+    public Iterable<User> alluser (){
         return userRepository.findAll();
     }
 
@@ -65,22 +65,22 @@ public class UserService {
 //            throw new IllegalArgumentException("Last name can`t be empty or null");
 //        }
 
-//        if(user.getEmail().isEmpty() || user.getEmail() ==null){
-//            throw new IllegalArgumentException("Email can`t be empty or null");
-//        }
-//
-//        if (user.getPassword().isEmpty() || user.getPassword() == null){
-//            throw new IllegalArgumentException("Password can`t be empty or null");
-//        }
-//        if (user.getPassword().length() < 8){
-//            throw new IllegalArgumentException("Password must be at least 8 characters");
-//        }
-//        if (!Email.matcher(user.getEmail()).find()) {
-//            throw new IllegalArgumentException("The email should be a valid email address.");
-//        }
-//        if (userRepository.existsByEmail(user.getEmail())){
-//            throw new IllegalArgumentException("This email is already in use");
-//        }
+        if(user.getEmail().isEmpty() || user.getEmail() ==null){
+            throw new IllegalArgumentException("Email can`t be empty or null");
+        }
+
+        if (user.getPassword().isEmpty() || user.getPassword() == null){
+            throw new IllegalArgumentException("Password can`t be empty or null");
+        }
+        if (user.getPassword().length() < 8){
+            throw new IllegalArgumentException("Password must be at least 8 characters");
+        }
+        if (!Email.matcher(user.getEmail()).find()) {
+            throw new IllegalArgumentException("The email should be a valid email address.");
+        }
+        if (userRepository.existsByEmail(user.getEmail())){
+            throw new IllegalArgumentException("This email is already in use");
+        }
         try{
             User userEntity = userRepository.findUserByEmail(user.getEmail());
 
