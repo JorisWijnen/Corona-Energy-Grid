@@ -92,8 +92,10 @@ public class User {
         return zipCode;
     }
 
+
     public String getPasswordHash() {
         return hash;
+
     }
 
     public Set<Role> getRoles() {
@@ -156,8 +158,10 @@ public class User {
         this.zipCode = zipCode;
     }
 
+
     public void setPassword(String password_hash) {
         this.hash = password_hash;
+
     }
 
     public Set<Status> getStatus() {

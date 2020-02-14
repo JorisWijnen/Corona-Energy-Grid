@@ -15,10 +15,10 @@ public class Status {
     private LocalDate localDate;
 
     @Column(nullable = false)
-    private int consumption;
+    private double consumption;
 
     @Column(nullable = false)
-    private int production;
+    private double production;
 
 
     public Status(LocalDate localDate, int consumption, int production) {
@@ -46,19 +46,19 @@ public class Status {
         this.localDate = localDate;
     }
 
-    public int getConsumption() {
+    public double getConsumption() {
         return consumption;
     }
 
-    public void setConsumption(int consumption) {
+    public void setConsumption(double consumption) {
         this.consumption = consumption;
     }
 
-    public int getProduction() {
+    public double getProduction() {
         return production;
     }
 
-    public void setProduction(int production) {
+    public void setProduction(double production) {
         this.production = production;
     }
 }
