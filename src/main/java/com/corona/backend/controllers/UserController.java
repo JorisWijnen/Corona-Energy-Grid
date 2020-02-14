@@ -89,8 +89,7 @@ public class UserController {
         try {
             Gson gson = new Gson();
             var userObject = gson.fromJson(user, RegisterDTO.class);
-            //System.out.println("userobject:" + userObject);
-            System.out.println("Received: " + user);
+
             return userService.registerUser(userObject);
         } catch (Exception e) {
             return "Failed to register: " + e.getMessage();

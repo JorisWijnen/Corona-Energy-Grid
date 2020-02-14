@@ -82,7 +82,6 @@ public class UserService {
         }
         if (userRepository.existsByEmail(user.getEmail()) && userRepository.existsByCustomerCode(user.getCustomerCode())){
             try{
-                //User userEntity = userRepository.findUserByEmail(user.getEmail());
                 User userEntity = userRepository.findUserByCustomerCode(user.getCustomerCode());
 
                 User updateUser = modelMapper.map(userEntity, User.class);
