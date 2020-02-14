@@ -52,8 +52,10 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public String registerUser(RegisterDTO user ) throws Exception {
+    public String registerUser(RegisterDTO user) throws Exception {
         final Pattern Email = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+        System.out.println("Received: " + user.getCustomerCode());
 
         if (user == null) throw new IllegalArgumentException("The user object is not allowed to be null.");
 
@@ -78,23 +80,29 @@ public class UserService {
         if (!Email.matcher(user.getEmail()).find()) {
             throw new IllegalArgumentException("The email should be a valid email address.");
         }
-        if (userRepository.existsByEmail(user.getEmail())){
-            throw new IllegalArgumentException("This email is already in use");
-        }
-        try{
-            User userEntity = userRepository.findUserByEmail(user.getEmail());
+        if (userRepository.existsByEmail(user.getEmail()) && userRepository.existsByCustomerCode(user.getCustomerCode())){
+            try{
+                //User userEntity = userRepository.findUserByEmail(user.getEmail());
+                User userEntity = userRepository.findUserByCustomerCode(user.getCustomerCode());
 
-            User updateUser = modelMapper.map(userEntity, User.class);
+                User updateUser = modelMapper.map(userEntity, User.class);
 
-            updateUser.setPassword(new AuthenticationUtils().encode(user.getPassword()));
-            userRepository.save(updateUser);
-            updateUser.setPassword(null);
-            return "saved";
+                updateUser.setPassword(new AuthenticationUtils().encode(user.getPassword()));
+                userRepository.save(updateUser);
+                updateUser.setPassword(null);
+                return "saved";
+            }
+
+            catch (Exception ex){
+                throw new Exception("Unable to save User to database");
+            }
+        }
+        else
+        {
+
+            return "Wrong email and customer code combination!";
         }
 
-        catch (Exception ex){
-            throw new Exception("Unable to save User to database");
-        }
     }
 
 }

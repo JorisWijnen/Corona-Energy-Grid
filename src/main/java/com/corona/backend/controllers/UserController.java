@@ -54,7 +54,7 @@ public class UserController {
     @RequestMapping(value = RestURIConstant.allUsers, method = RequestMethod.GET)
     public @ResponseBody
     Iterable<User> allUsers() {
-        return userService.allusers();
+        return userService.alluser();
     }
 
     //@PreAuthorize("isAuthenticated()")
@@ -90,7 +90,7 @@ public class UserController {
             Gson gson = new Gson();
             var userObject = gson.fromJson(user, RegisterDTO.class);
             //System.out.println("userobject:" + userObject);
-            //System.out.println("Received: " + user);
+            System.out.println("Received: " + user);
             return userService.registerUser(userObject);
         } catch (Exception e) {
             return "Failed to register: " + e.getMessage();
