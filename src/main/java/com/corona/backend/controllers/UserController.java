@@ -84,13 +84,13 @@ public class UserController {
         return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
 
-    //@RequestMapping(value = RestURIConstant.userRegistration, method = RequestMethod.POST)
     @PostMapping(value = RestURIConstant.userRegistration)
     public @ResponseBody String userRegister(@RequestBody String user) {
         try {
             Gson gson = new Gson();
             var userObject = gson.fromJson(user, RegisterDTO.class);
-            System.out.println("Received: " + user);
+            //System.out.println("userobject:" + userObject);
+            //System.out.println("Received: " + user);
             return userService.registerUser(userObject);
         } catch (Exception e) {
             return "Failed to register: " + e.getMessage();

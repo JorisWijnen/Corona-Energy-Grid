@@ -55,30 +55,32 @@ public class UserService {
     public String registerUser(RegisterDTO user ) throws Exception {
         final Pattern Email = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-//        if (user == null) throw new IllegalArgumentException("The user object is not allowed to be null.");
-//
+        if (user == null) throw new IllegalArgumentException("The user object is not allowed to be null.");
+
 //        if(user.getFirstName().isEmpty() || user.getFirstName() ==null ){
-//            throw new IllegalArgumentException("Firstname can`t be empty or null");
+//            throw new IllegalArgumentException("First name can`t be empty or null");
 //        }
 //
-//        if(user.getEmail().isEmpty() || user.getEmail() ==null){
-//            throw new IllegalArgumentException("Email can`t be empty or null");
-//        }
 //        if(user.getLastName().isEmpty() || user.getLastName() ==null){
-//            throw new IllegalArgumentException("Surname can`t be empty or null");
+//            throw new IllegalArgumentException("Last name can`t be empty or null");
 //        }
-//        if (user.getPassword().isEmpty() || user.getPassword() == null){
-//            throw new IllegalArgumentException("Password can`t be empty or null");
-//        }
-//        if (user.getPassword().length() < 8){
-//            throw new IllegalArgumentException("Password must be at least 8 characters");
-//        }
-//        if (!Email.matcher(user.getEmail()).find()) {
-//            throw new IllegalArgumentException("The email should be a valid email address.");
-//        }
-//        if (userRepository.existsByEmail(user.getEmail())){
-//            throw new IllegalArgumentException("This email is already in use");
-//        }
+
+        if(user.getEmail().isEmpty() || user.getEmail() ==null){
+            throw new IllegalArgumentException("Email can`t be empty or null");
+        }
+
+        if (user.getPassword().isEmpty() || user.getPassword() == null){
+            throw new IllegalArgumentException("Password can`t be empty or null");
+        }
+        if (user.getPassword().length() < 8){
+            throw new IllegalArgumentException("Password must be at least 8 characters");
+        }
+        if (!Email.matcher(user.getEmail()).find()) {
+            throw new IllegalArgumentException("The email should be a valid email address.");
+        }
+        if (userRepository.existsByEmail(user.getEmail())){
+            throw new IllegalArgumentException("This email is already in use");
+        }
         try{
             User userEntity = modelMapper.map(user, User.class);
             userEntity.setPassword(new AuthenticationUtils().encode(user.getPassword()));
