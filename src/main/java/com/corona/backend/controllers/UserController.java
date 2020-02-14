@@ -84,7 +84,7 @@ public class UserController {
         return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
 
-    @PostMapping(value = RestURIConstant.userRegistration)
+    @PostMapping(value = RestURIConstant.userRegistration, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String userRegister(@RequestBody String user) {
         try {
             Gson gson = new Gson();
