@@ -40,7 +40,7 @@ public class BackendApplication {
 
             RandomString rdm = new RandomString();
             System.out.println(rdm.getAlphaNumericString(8));
-            User user1 = new User("victor","victory","fontys123","test@test.com","5981KK", "dorpsstraat", "PANNINGEN", "12a",rdm.getAlphaNumericString(8)); //default
+            User user1 = new User("victor","victory","","test@test.com","5981KK", "dorpsstraat", "PANNINGEN", "12a",rdm.getAlphaNumericString(8)); //default
             User user2 = new User("Piet","Pieters","fobba123","test@test.nl","5981CC","kerkstraat", "WEERT", "13", rdm.getAlphaNumericString(8)); //default
 
             Role adminrole = new Role();

@@ -96,20 +96,4 @@ public class UserController {
             return "Failed to register: " + e.getMessage();
         }
     }
-
-//    @PostMapping(value = RestURIConstant.userRegistration)
-//    public @ResponseBody
-//    boolean userRegistration(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
-//                             @RequestParam("password") String password,
-//                             @RequestParam("email") String email,
-//                             @RequestParam("zipcode") String zipCode,
-//                             @RequestParam("street") String street,
-//                             @RequestParam("city") String city,
-//                             @RequestParam("housenumber") String houseNumber,
-//                             @RequestParam("costumercode") String costumerCode){
-//
-//
-//
-//        return false;
-//    }
 }
