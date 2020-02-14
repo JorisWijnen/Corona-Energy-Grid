@@ -44,7 +44,7 @@ public class UserService {
         User newuser = userRepository.findUserByEmail(user.getEmail());
         return newuser;
     }
-    public Iterable<User> allusers(){
+    public Iterable<User> alluser (){
         return userRepository.findAll();
     }
 
@@ -78,10 +78,12 @@ public class UserService {
         if (!Email.matcher(user.getEmail()).find()) {
             throw new IllegalArgumentException("The email should be a valid email address.");
         }
-        if (userRepository.existsByEmail(user.getEmail())){
-            throw new IllegalArgumentException("This email is already in use");
+        if (userRepository.checkIfCustomerCodeIsCorrect(user.getCustomerCode()) && userRepository.checkIfEmailExists(user.getEmail())){
+
         }
+
         try{
+
             User userEntity = modelMapper.map(user, User.class);
             userEntity.setPassword(new AuthenticationUtils().encode(user.getPassword()));
             userRepository.save(userEntity);
