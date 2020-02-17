@@ -11,23 +11,14 @@ public class RegisterDTO {
     private String password;
 
     @JsonProperty
-    private int customerNumber;
+    private String customerCode;
 
-    @JsonProperty
-    private String houseNumber;
+    public RegisterDTO(){}
 
-    @JsonProperty
-    private String zipCode;
-
-    public RegisterDTO(String email, String password, int customerNumber, String houseNumber, String zipCode) {
+    public RegisterDTO(String email, String password, String customerCode) {
         this.email = email;
         this.password = password;
-        this.customerNumber = customerNumber;
-        this.houseNumber = houseNumber;
-        this.zipCode = zipCode;
-    }
-
-    public RegisterDTO() {
+        this.customerCode = customerCode;
     }
 
     public String getEmail() {
@@ -46,27 +37,11 @@ public class RegisterDTO {
         this.password = password;
     }
 
-    public int getCustomerNumber() {
-        return customerNumber;
+    public String getCustomerCode() {
+        return customerCode;
     }
 
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
-    }
-
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
     }
 }

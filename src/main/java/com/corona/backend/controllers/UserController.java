@@ -1,11 +1,16 @@
 package com.corona.backend.controllers;
 
+import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.StatusDTO;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.services.StatusService;
 import com.corona.backend.services.UserService;
 import com.corona.backend.utils.StatusPeriod;
+import com.google.gson.Gson;
+import org.json.JSONObject;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.awt.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -44,7 +53,7 @@ public class UserController {
     @RequestMapping(value = RestURIConstant.allUsers, method = RequestMethod.GET)
     public @ResponseBody
     Iterable<User> allUsers() {
-        return userService.allusers();
+        return userService.alluser();
     }
 
     //@PreAuthorize("isAuthenticated()")
@@ -69,4 +78,21 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
+    public @ResponseBody
+    List<StatusDTO> getStatusForPeriod(@RequestParam("id") Long id, @RequestParam("statusPeriod") StatusPeriod statusPeriod, @RequestParam("currentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
+        return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
+    }
+
+    @PostMapping(value = RestURIConstant.userRegistration, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody String userRegister(@RequestBody String user) {
+        try {
+            Gson gson = new Gson();
+            var userObject = gson.fromJson(user, RegisterDTO.class);
+
+            return userService.registerUser(userObject);
+        } catch (Exception e) {
+            return "Failed to register: " + e.getMessage();
+        }
+    }
 }

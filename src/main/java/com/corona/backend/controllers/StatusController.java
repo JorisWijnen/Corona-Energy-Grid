@@ -1,8 +1,6 @@
 package com.corona.backend.controllers;
 
 import com.corona.backend.dto.StatusDTO;
-import com.corona.backend.dto.UserDTO;
-import com.corona.backend.models.User;
 import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.services.StatusService;
 import com.corona.backend.utils.StatusPeriod;
