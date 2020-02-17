@@ -22,6 +22,11 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column
+    private String phoneNumber;
+    @Column
+    private String mobileNumber;
+
     @Column(nullable = false)
     private String zipCode;
 
@@ -53,11 +58,13 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String firstName, String lastName, String password_hash, String email, String zipCode, String street, String city, String houseNumber, String customerCode) {
+    public User(String firstName, String lastName, String password_hash, String email, String phoneNumber, String mobileNumber, String zipCode, String street, String city, String houseNumber, String customerCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.hash = password_hash;
         this.email= email;
+        this.phoneNumber = phoneNumber;
+        this.mobileNumber = mobileNumber;
         this.zipCode = zipCode;
         this.street = street;
         this.city = city;
@@ -104,6 +111,22 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public void setId(Long id) {

@@ -7,6 +7,7 @@ public class RestURIConstant {
     public static final String currentUser = "/UserController/current";
     public static final String userRegistration = "/UserController/registration";
     public static final String getStatus = "/UserController/getStatus";
-
     public static final String getUserStatus = "/UserController/status";
+    public static final String getUserProfile = "/UserController/profile";
+    public static final String updateProfile = "/UserController/updateProfile";
 }

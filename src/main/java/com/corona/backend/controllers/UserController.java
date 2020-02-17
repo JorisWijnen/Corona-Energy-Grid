@@ -1,7 +1,9 @@
 package com.corona.backend.controllers;
 
+import com.corona.backend.dto.ProfileDTO;
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.StatusDTO;
+import com.corona.backend.dto.UserDTO;
 import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
@@ -10,6 +12,7 @@ import com.corona.backend.services.UserService;
 import com.corona.backend.utils.StatusPeriod;
 import com.google.gson.Gson;
 import org.json.JSONObject;
+import org.springframework.context.annotation.Profile;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -63,7 +66,7 @@ public class UserController {
     User current() {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         final String email = (String) auth.getPrincipal();
-        return userRepository.findUserByEmail(email);
+        return userRepository.findUserByCustomerCode(email);
     }
 
     @RequestMapping(value = RestURIConstant.getUserStatus, method = RequestMethod.GET)
@@ -71,6 +74,12 @@ public class UserController {
     List<StatusDTO> getUserStatus(@RequestParam("id") Long id) {
         User user = (User) getCurrentAuthorizedUser(User.class);
         return statusService.getStatusById(user.getId());
+    }
+
+    @RequestMapping(value = RestURIConstant.getUserProfile, method = RequestMethod.GET)
+    public @ResponseBody
+    ProfileDTO getProfile(@RequestParam("customerCode") String customerCode){
+        return userService.getUserByCustomerCode(customerCode);
     }
 
     private Object getCurrentAuthorizedUser(Class returnType) {
@@ -84,7 +93,7 @@ public class UserController {
         return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
     }
 
-    @PostMapping(value = RestURIConstant.userRegistration, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = RestURIConstant.userRegistration)
     public @ResponseBody String userRegister(@RequestBody String user) {
         try {
             Gson gson = new Gson();
@@ -93,6 +102,18 @@ public class UserController {
             return userService.registerUser(userObject);
         } catch (Exception e) {
             return "Failed to register: " + e.getMessage();
+        }
+    }
+
+    @PutMapping(value = RestURIConstant.updateProfile)
+    public @ResponseBody String updateProfileDetails(@RequestBody String user) {
+        try {
+            //TODO: Get current user
+            Gson gson = new Gson();
+            var userObject = gson.fromJson(user, ProfileDTO.class);
+            return userService.updateProfile(userObject);
+        } catch (Exception e) {
+            return "Failed to update profile: " + e.getMessage();
         }
     }
 }

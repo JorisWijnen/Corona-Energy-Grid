@@ -1,11 +1,13 @@
 package com.corona.backend.services;
 
+import com.corona.backend.dto.ProfileDTO;
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.UserDTO;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.AuthenticationUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -102,6 +104,24 @@ public class UserService {
             return "Wrong email and customer code combination!";
         }
 
+    }
+
+    public ProfileDTO getUserByCustomerCode(String customerCode){
+        return modelMapper.map(userRepository.findUserByCustomerCode(customerCode), ProfileDTO.class);
+    }
+
+    public String updateProfile(ProfileDTO user) throws Exception{
+        try{
+            User userEntity = userRepository.findUserByCustomerCode(user.getCustomerCode());
+            User updateUser = modelMapper.map(userEntity, User.class);
+            userRepository.save(updateUser);
+
+            return "Profile updated";
+        }
+
+        catch (Exception ex){
+            throw new Exception("Unable to update user in database");
+        }
     }
 
 }

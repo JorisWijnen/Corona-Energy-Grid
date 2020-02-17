@@ -14,6 +14,12 @@ public class ProfileDTO {
     private String email;
 
     @JsonProperty
+    private String phoneNumber;
+
+    @JsonProperty
+    private String mobileNumber;
+
+    @JsonProperty
     private String zipCode;
 
     @JsonProperty
@@ -28,10 +34,12 @@ public class ProfileDTO {
     @JsonProperty
     private String customerCode;
 
-    public ProfileDTO(String firstName, String lastName, String email, String zipCode, String street, String city, String houseNumber, String customerCode) {
+    public ProfileDTO(String firstName, String lastName, String email, String phoneNumber, String mobileNumber, String zipCode, String street, String city, String houseNumber, String customerCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.mobileNumber = mobileNumber;
         this.zipCode = zipCode;
         this.street = street;
         this.city = city;
@@ -64,6 +72,22 @@ public class ProfileDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getZipCode() {
