@@ -3,6 +3,7 @@ package com.corona.backend.services;
 import com.corona.backend.dto.ProfileDTO;
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.UserDTO;
+import com.corona.backend.exceptions.BadRequestException;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.AuthenticationUtils;
@@ -54,7 +55,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public String registerUser(RegisterDTO user) throws Exception {
+    public String registerUser(RegisterDTO user) throws BadRequestException {
         final Pattern Email = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
         System.out.println("Received: " + user.getCustomerCode());
@@ -83,7 +84,7 @@ public class UserService {
             throw new IllegalArgumentException("The email should be a valid email address.");
         }
         if (userRepository.existsByEmail(user.getEmail()) && userRepository.existsByCustomerCode(user.getCustomerCode())){
-            try{
+
                 User userEntity = userRepository.findUserByCustomerCode(user.getCustomerCode());
 
                 User updateUser = modelMapper.map(userEntity, User.class);
@@ -92,16 +93,10 @@ public class UserService {
                 userRepository.save(updateUser);
                 updateUser.setPassword(null);
                 return "saved";
-            }
-
-            catch (Exception ex){
-                throw new Exception("Unable to save User to database");
-            }
         }
         else
         {
-
-            return "Wrong email and customer code combination!";
+            throw new BadRequestException("Wrong email and customer code combination!");
         }
 
     }
