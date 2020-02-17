@@ -68,12 +68,5 @@ public class UserController {
         return userService.getCurrentUser(auth, returnType);
     }
 
-    @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
-    public @ResponseBody
-    List<StatusDTO> getStatusForPeriod(@RequestParam("id") Long id, @RequestParam("statusPeriod") String statusPeriod, @RequestParam("currentDate") String unixDateTime) {
-        var statusPeriodEnum = StatusPeriod.values()[Integer.parseInt(statusPeriod)];
-        var unixInteger = Long.parseLong(unixDateTime);
-        var currentDate = Instant.ofEpochMilli(unixInteger).atZone(ZoneId.systemDefault()).toLocalDate();
-        return statusService.getStatusForPeriod(id, statusPeriodEnum, currentDate);
-    }
+
 }
