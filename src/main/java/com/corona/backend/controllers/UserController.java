@@ -3,8 +3,6 @@ package com.corona.backend.controllers;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.services.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,11 +38,11 @@ public class UserController {
         return userService.allusers();
     }
 
-    //@PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = RestURIConstant.currentUser, method = RequestMethod.GET)
-    public @ResponseBody User current(){
-        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        final String username = (String) auth.getPrincipal();
-        return userRepository.findUserByUsername(username);
-    }
+//    //@PreAuthorize("isAuthenticated()")
+//    @RequestMapping(value = RestURIConstant.currentUser, method = RequestMethod.GET)
+//    public @ResponseBody User current(){
+//        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        final String username = (String) auth.getPrincipal();
+//        return userRepository.findUserByUsername(username);
+//    }
 }
