@@ -4,7 +4,7 @@ import com.corona.backend.dto.ProfileDTO;
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.StatusDTO;
 import com.corona.backend.dto.UserDTO;
-import com.corona.backend.exceptions.BadRequestException;
+import com.corona.backend.exceptions.ApiRequestException;
 import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
@@ -91,12 +91,14 @@ public class UserController {
     @PostMapping(value = RestURIConstant.userRegistration)
     public @ResponseBody String userRegister(@RequestBody String user) {
         try {
+
             Gson gson = new Gson();
             var userObject = gson.fromJson(user, RegisterDTO.class);
 
             return gson.toJson(userService.registerUser(userObject));
-        } catch (BadRequestException e) {
-            return "Failed to register: " + e.getMessage();
+        } catch (Exception e) {
+            throw new ApiRequestException("Failed to register, check your email/code combination");
+            //return "Failed to register: " + e.getMessage();
         }
     }
 

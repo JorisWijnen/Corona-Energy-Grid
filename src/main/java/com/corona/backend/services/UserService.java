@@ -3,7 +3,7 @@ package com.corona.backend.services;
 import com.corona.backend.dto.ProfileDTO;
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.UserDTO;
-import com.corona.backend.exceptions.BadRequestException;
+import com.corona.backend.exceptions.ApiRequestException;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.AuthenticationUtils;
@@ -55,20 +55,12 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public String registerUser(RegisterDTO user) throws BadRequestException {
+    public String registerUser(RegisterDTO user) {
         final Pattern Email = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
         System.out.println("Received: " + user.getCustomerCode());
 
         if (user == null) throw new IllegalArgumentException("The user object is not allowed to be null.");
-
-//        if(user.getFirstName().isEmpty() || user.getFirstName() ==null ){
-//            throw new IllegalArgumentException("First name can`t be empty or null");
-//        }
-//
-//        if(user.getLastName().isEmpty() || user.getLastName() ==null){
-//            throw new IllegalArgumentException("Last name can`t be empty or null");
-//        }
 
         if(user.getEmail().isEmpty() || user.getEmail() ==null){
             throw new IllegalArgumentException("Email can`t be empty or null");
@@ -93,11 +85,10 @@ public class UserService {
                 userRepository.save(updateUser);
                 updateUser.setPassword(null);
                 return "saved";
-        }
-        else
-        {
-            throw new BadRequestException("Wrong email and customer code combination!");
-        }
+            }
+            else{
+                throw new ApiRequestException("Wrong combination");
+            }
 
     }
 
