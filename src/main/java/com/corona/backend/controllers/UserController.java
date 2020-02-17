@@ -88,11 +88,11 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
-    public @ResponseBody
-    List<StatusDTO> getStatusForPeriod(@RequestParam("id") Long id, @RequestParam("statusPeriod") StatusPeriod statusPeriod, @RequestParam("currentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
-        return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
-    }
+//    @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
+////    public @ResponseBody
+////    List<StatusDTO> getStatusForPeriod(@RequestParam("id") Long id, @RequestParam("statusPeriod") StatusPeriod statusPeriod, @RequestParam("currentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate) {
+////        return statusService.getStatusForPeriod(id, statusPeriod, currentDate);
+////    }
 
     @PostMapping(value = RestURIConstant.userRegistration)
     public @ResponseBody String userRegister(@RequestBody String user) {
