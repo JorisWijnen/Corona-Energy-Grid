@@ -2,7 +2,6 @@ package com.corona.backend.controllers;
 
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.StatusDTO;
-import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.services.StatusService;
@@ -17,13 +16,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -69,14 +68,15 @@ public class UserController {
     @RequestMapping(value = RestURIConstant.getUserStatus, method = RequestMethod.GET)
     public @ResponseBody
     List<StatusDTO> getUserStatus(@RequestParam("id") Long id) {
-        User user = (User) getCurrentAuthorizedUser(User.class);
-        return statusService.getStatusById(user.getId());
+        //  User user = (User) getCurrentAuthorizedUser(User.class);
+        return statusService.getStatusById(id);
     }
 
     private Object getCurrentAuthorizedUser(Class returnType) {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userService.getCurrentUser(auth, returnType);
     }
+
 
     @RequestMapping(value = RestURIConstant.getStatus, method = RequestMethod.GET)
     public @ResponseBody

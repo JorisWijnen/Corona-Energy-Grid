@@ -12,7 +12,7 @@ public class Status {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate localDate;
+    private Date date;
 
     @Column(nullable = false)
     private double consumption;
@@ -21,8 +21,9 @@ public class Status {
     private double production;
 
 
-    public Status(LocalDate localDate, int consumption, int production) {
-        this.localDate = localDate;
+
+    public Status(Date date, double consumption, double production) {
+        this.date = date;
         this.consumption = consumption;
         this.production = production;
     }
@@ -38,12 +39,12 @@ public class Status {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return localDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setDate(Date localDate) {
+        this.date = localDate;
     }
 
     public double getConsumption() {
