@@ -1,13 +1,16 @@
 package com.corona.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class StatusDTO {
 
     @JsonProperty
-    private LocalDate date;
+    private Date date;
 
     @JsonProperty
     private int consumption;
@@ -18,7 +21,7 @@ public class StatusDTO {
     @JsonProperty
     private String label;
 
-    public StatusDTO(LocalDate date, int consumption, int production) {
+    public StatusDTO(Date date, int consumption, int production) {
         this.date = date;
         this.consumption = consumption;
         this.production = production;
@@ -27,11 +30,22 @@ public class StatusDTO {
     public StatusDTO() {
     }
 
-    public LocalDate getDate() {
+    public StatusDTO(String label) {
+        this.label = label;
+    }
+
+    @JsonIgnore
+    public LocalDate getLocalDate() {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

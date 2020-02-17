@@ -51,6 +51,8 @@ public class BackendApplication {
             User user2 = new User("Piet","Pieters","fobba123","test@test.nl", "0773086060", "0687654321",data2[CsvValues.ZIPCODE.getValue()],data2[CsvValues.STREET.getValue()], data2[CsvValues.CITY.getValue()], data2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
 
 
+
+
             Role adminrole = new Role();
             Role defaultrole = new Role();
             adminrole.setName("ADMIN_USER");
@@ -76,22 +78,16 @@ public class BackendApplication {
             Status status3 = new Status();
 
 
-            status1.setDate(LocalDate.now());
-
-            status1.setConsumption(100);
-            status1.setProduction(66);
+            status1.setDate(new Date());
             status1.setConsumption(Double.parseDouble(data1[CsvValues.CONSUME.getValue()]));
             status1.setProduction(Double.parseDouble(data1[CsvValues.PRODUCE.getValue()]));
 
-            status2.setDate(LocalDate.now());
-
-            status2.setConsumption(100);
-            status2.setProduction(122);
+            status2.setDate(new Date());
             status2.setConsumption(Double.parseDouble(data2[CsvValues.CONSUME.getValue()]));
             status2.setProduction(Double.parseDouble(data2[CsvValues.PRODUCE.getValue()]));
 
 
-            status3.setDate(LocalDate.now());
+            status3.setDate(new Date());
             status3.setConsumption(111);
             status3.setProduction(133);
 
