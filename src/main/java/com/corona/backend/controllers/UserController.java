@@ -3,30 +3,18 @@ package com.corona.backend.controllers;
 import com.corona.backend.dto.ProfileDTO;
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.StatusDTO;
-import com.corona.backend.dto.UserDTO;
-import com.corona.backend.exceptions.ApiRequestException;
-import com.corona.backend.models.Status;
+import com.corona.backend.exceptions.BadRequestException;
+import com.corona.backend.exceptions.NotFoundException;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.services.StatusService;
 import com.corona.backend.services.UserService;
-import com.corona.backend.utils.StatusPeriod;
 import com.google.gson.Gson;
-import org.json.JSONObject;
-import org.springframework.context.annotation.Profile;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.awt.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -97,9 +85,9 @@ public class UserController {
 
             return gson.toJson(userService.registerUser(userObject));
         } catch (Exception e) {
-            throw new ApiRequestException("Failed to register, check your email/code combination");
-            //return "Failed to register: " + e.getMessage();
-        }
+            throw new BadRequestException("Failed to register, check your email/code combination");
+
+    }
     }
 
     @PutMapping(value = RestURIConstant.updateProfile)
@@ -110,7 +98,7 @@ public class UserController {
             var userObject = gson.fromJson(user, ProfileDTO.class);
             return userService.updateProfile(userObject);
         } catch (Exception e) {
-            return "Failed to update profile: " + e.getMessage();
+            throw new BadRequestException("Failed to update profile");
         }
     }
 }

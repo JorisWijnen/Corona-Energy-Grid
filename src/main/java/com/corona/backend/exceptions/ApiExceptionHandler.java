@@ -1,5 +1,6 @@
 package com.corona.backend.exceptions;
 
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,8 +12,8 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(value = {ApiRequestException.class})
-    public ResponseEntity<Object> handleApiRequestException(ApiRequestException e){
+    @ExceptionHandler(value = {BadRequestException.class})
+    public ResponseEntity<Object> handleBadRequestException(BadRequestException e){
 
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         ApiException apiException = new ApiException(
@@ -22,4 +23,18 @@ public class ApiExceptionHandler {
         );
        return new ResponseEntity<>(apiException, badRequest);
     }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    public ResponseEntity<Object> handleNotFoundException(NotFoundException e){
+
+        HttpStatus notFound = HttpStatus.NOT_FOUND;
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                notFound,
+                ZonedDateTime.now(ZoneId.of("Europe/Amsterdam"))
+        );
+        return new ResponseEntity<>(apiException, notFound);
+    }
+
+
 }
