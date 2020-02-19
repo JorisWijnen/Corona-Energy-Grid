@@ -16,10 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.io.BufferedReader;
 import com.corona.backend.utils.CsvValues;
 
