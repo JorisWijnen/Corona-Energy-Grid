@@ -15,6 +15,12 @@ public class UserDTO {
     private String email;
 
     @JsonProperty
+    private String phoneNumber;
+
+    @JsonProperty
+    private String mobileNumber;
+
+    @JsonProperty
     private String zipCode;
 
     @JsonProperty
@@ -30,10 +36,12 @@ public class UserDTO {
     private Set<StatusDTO> status;
 
 
-    public UserDTO(String firstName, String lastName, String email, String zipCode, String houseNumber, String customerCode, Set<String> roles, Set<StatusDTO> status) {
+    public UserDTO(String firstName, String lastName, String email, String phoneNumber, String mobileNumber, String zipCode, String houseNumber, String customerCode, Set<String> roles, Set<StatusDTO> status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phoneNumber= phoneNumber;
+        this.mobileNumber = mobileNumber;
         this.zipCode = zipCode;
         this.houseNumber = houseNumber;
         this.customerCode = customerCode;
@@ -43,6 +51,7 @@ public class UserDTO {
 
     public UserDTO() {
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -66,6 +75,22 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getZipCode() {

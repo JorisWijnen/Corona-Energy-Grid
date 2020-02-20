@@ -9,4 +9,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findUserById(Long id);
     User findUserByEmail(String email);
+    User findUserByCustomerCode(String customerCode);
+
+
+    Boolean existsByEmail(String email);
+    Boolean existsByCustomerCode(String customerCode);
 }

@@ -16,11 +16,16 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "password_hash", nullable = false)
+    private String hash;
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Column
+    private String phoneNumber;
+    @Column
+    private String mobileNumber;
 
     @Column(nullable = false)
     private String zipCode;
@@ -53,11 +58,13 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String firstName, String lastName, String password, String email, String zipCode, String street, String city, String houseNumber, String customerCode) {
+    public User(String firstName, String lastName, String password_hash, String email, String phoneNumber, String mobileNumber, String zipCode, String street, String city, String houseNumber, String customerCode) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
+        this.hash = password_hash;
         this.email= email;
+        this.phoneNumber = phoneNumber;
+        this.mobileNumber = mobileNumber;
         this.zipCode = zipCode;
         this.street = street;
         this.city = city;
@@ -66,8 +73,8 @@ public class User {
     }
 
     public User(){
-
     }
+
     public Long getId() {
         return id;
     }
@@ -92,16 +99,10 @@ public class User {
         return zipCode;
     }
 
-    public String getStreet() {
-        return street;
-    }
 
-    public String getCity() {
-        return city;
-    }
+    public String getPasswordHash() {
+        return hash;
 
-    public String getPassword() {
-        return password;
     }
 
     public Set<Role> getRoles() {
@@ -110,6 +111,58 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setEmail(String email) {
@@ -128,16 +181,10 @@ public class User {
         this.zipCode = zipCode;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+    public void setPassword(String password_hash) {
+        this.hash = password_hash;
 
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Set<Status> getStatus() {

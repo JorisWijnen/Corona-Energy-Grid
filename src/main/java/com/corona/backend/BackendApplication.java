@@ -9,6 +9,7 @@ import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.AuthenticationUtils;
 import com.corona.backend.utils.RandomString;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,12 +29,17 @@ public class BackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
     @Bean
     public CommandLineRunner demo(UserRepository userRepository, RoleRepository roleRepository, StatusRepository statusRepository){
         return args -> {
 
             RandomString rdm = new RandomString();
-            System.out.println(rdm.getAlphaNumericString(8));
             BufferedReader reader = new BufferedReader(new FileReader("enexis_electricity_01012010_mod.csv"));
             // Do one readLine to skip the first line of column headers
             reader.readLine();
@@ -41,8 +47,8 @@ public class BackendApplication {
             String value2 = reader.readLine();
             String[] data1 = value1.split(",");
             String[] data2 = value2.split(",");
-            User user1 = new User("victor","victory","fontys123","test@test.com",data1[CsvValues.ZIPCODE.getValue()], data1[CsvValues.STREET.getValue()], data1[CsvValues.CITY.getValue()], data1[CsvValues.HOUSE_NUMBER.getValue()],rdm.getAlphaNumericString(8)); //default
-            User user2 = new User("Piet","Pieters","fobba123","test@test.nl",data2[CsvValues.ZIPCODE.getValue()],data2[CsvValues.STREET.getValue()], data2[CsvValues.CITY.getValue()], data2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
+            User user1 = new User("victor","victory","fontys123","test@test.com", "0773077070", "0612345678", data1[CsvValues.ZIPCODE.getValue()], data1[CsvValues.STREET.getValue()], data1[CsvValues.CITY.getValue()], data1[CsvValues.HOUSE_NUMBER.getValue()],"123456"); //default
+            User user2 = new User("Piet","Pieters","fobba123","test@test.nl", "0773086060", "0687654321",data2[CsvValues.ZIPCODE.getValue()],data2[CsvValues.STREET.getValue()], data2[CsvValues.CITY.getValue()], data2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
 
 
 
@@ -60,8 +66,8 @@ public class BackendApplication {
             user1.setRoles(roles1);
             user2.setRoles(roles2);
 
-            user1.setPassword(new AuthenticationUtils().encode(user1.getPassword()));
-            user2.setPassword(new AuthenticationUtils().encode(user2.getPassword()));
+            user1.setPassword(new AuthenticationUtils().encode(user1.getPasswordHash()));
+            user2.setPassword(new AuthenticationUtils().encode(user2.getPasswordHash()));
 
             roleRepository.save(adminrole);
             roleRepository.save(defaultrole);
@@ -79,6 +85,7 @@ public class BackendApplication {
             status2.setDate(new Date());
             status2.setConsumption(Double.parseDouble(data2[CsvValues.CONSUME.getValue()]));
             status2.setProduction(Double.parseDouble(data2[CsvValues.PRODUCE.getValue()]));
+
 
             status3.setDate(new Date());
             status3.setConsumption(111);
