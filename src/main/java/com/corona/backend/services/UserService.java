@@ -3,12 +3,11 @@ package com.corona.backend.services;
 import com.corona.backend.dto.ProfileDTO;
 import com.corona.backend.dto.RegisterDTO;
 import com.corona.backend.dto.UserDTO;
-import com.corona.backend.exceptions.ApiRequestException;
+import com.corona.backend.exceptions.BadRequestException;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.AuthenticationUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -70,7 +69,7 @@ public class UserService {
             throw new IllegalArgumentException("Password can`t be empty or null");
         }
         if (user.getPassword().length() < 8){
-            throw new IllegalArgumentException("Password must be at least 8 characters");
+            throw new BadRequestException("Password must be at least 8 characters");
         }
         if (!Email.matcher(user.getEmail()).find()) {
             throw new IllegalArgumentException("The email should be a valid email address.");
@@ -87,7 +86,7 @@ public class UserService {
                 return "saved";
             }
             else{
-                throw new ApiRequestException("Wrong combination");
+                throw new BadRequestException("Wrong combination");
             }
 
     }
