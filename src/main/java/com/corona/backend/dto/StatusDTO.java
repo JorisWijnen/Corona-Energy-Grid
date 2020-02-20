@@ -21,7 +21,7 @@ public class StatusDTO {
     @JsonProperty
     private String label;
 
-    public StatusDTO(Date date, int consumption, int production)
+    public StatusDTO(Date date, int consumption, int production) {
         this.date = date;
         this.consumption = consumption;
         this.production = production;
