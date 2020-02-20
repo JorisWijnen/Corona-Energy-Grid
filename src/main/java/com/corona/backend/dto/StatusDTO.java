@@ -53,7 +53,7 @@ public class StatusDTO {
         this.label = label;
     }
 
-    public int getConsumption() {
+    public double getConsumption() {
         return consumption;
     }
 
@@ -65,7 +65,7 @@ public class StatusDTO {
         this.consumption += addition;
     }
 
-    public int getProduction() {
+    public double getProduction() {
         return production;
     }
 
