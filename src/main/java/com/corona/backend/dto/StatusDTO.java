@@ -61,7 +61,7 @@ public class StatusDTO {
         this.consumption = consumption;
     }
 
-    public void addConsumption(int addition) {
+    public void addConsumption(double addition) {
         this.consumption += addition;
     }
 
@@ -73,7 +73,7 @@ public class StatusDTO {
         this.production = production;
     }
 
-    public void addProduction(int addition) {
+    public void addProduction(double addition) {
         this.production += addition;
     }
 }
