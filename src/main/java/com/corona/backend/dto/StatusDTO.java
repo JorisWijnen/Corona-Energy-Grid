@@ -21,7 +21,7 @@ public class StatusDTO {
     @JsonProperty
     private String label;
 
-    public StatusDTO(Date date, int consumption, int production) 
+    public StatusDTO(Date date, int consumption, int production)
         this.date = date;
         this.consumption = consumption;
         this.production = production;
@@ -49,15 +49,11 @@ public class StatusDTO {
         this.date = date;
     }
 
-<<<<<<< HEAD
-    public double getConsumption() {
-=======
     public void setLabel(String label) {
         this.label = label;
     }
 
     public int getConsumption() {
->>>>>>> c4971790bdc79068d493c0aae7cb131801e1f3b4
         return consumption;
     }
 
@@ -65,15 +61,11 @@ public class StatusDTO {
         this.consumption = consumption;
     }
 
-<<<<<<< HEAD
-    public double getProduction() {
-=======
     public void addConsumption(int addition) {
         this.consumption += addition;
     }
 
     public int getProduction() {
->>>>>>> c4971790bdc79068d493c0aae7cb131801e1f3b4
         return production;
     }
 
