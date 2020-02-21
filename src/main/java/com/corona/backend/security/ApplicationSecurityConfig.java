@@ -1,22 +1,22 @@
 package com.corona.backend.security;
 
+import com.corona.backend.security.auth.ApplicationUserService;
+import com.corona.backend.security.jwt.JwtConfig;
+import com.corona.backend.security.jwt.JwtTokenVerifier;
+import com.corona.backend.security.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import static com.corona.backend.security.ApplicationUserPermission.*;
-import static com.corona.backend.security.ApplicationUserRole.*;
+import javax.crypto.SecretKey;
 
 @Configuration
 @EnableWebSecurity
@@ -24,10 +24,16 @@ import static com.corona.backend.security.ApplicationUserRole.*;
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
+    private final ApplicationUserService applicationUserService;
+    private final SecretKey secretKey;
+    private final JwtConfig jwtConfig;
 
     @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder){
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService, SecretKey secretKey, JwtConfig jwtConfig){
         this.passwordEncoder = passwordEncoder;
+        this.applicationUserService = applicationUserService;
+        this.secretKey = secretKey;
+        this.jwtConfig = jwtConfig;
     }
 
     @Override
@@ -41,40 +47,29 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
          **/
 
         http
-//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-////                .and()
                 .csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+                .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/","index","/css/*","/js/*","/public/**").permitAll()
-//                .antMatchers(HttpMethod.DELETE, "/user/**").hasAuthority(USER_WRITE.getPermission())
-//                .antMatchers(HttpMethod.POST, "/user/**").hasAuthority(USER_WRITE.getPermission())
-//                .antMatchers(HttpMethod.PUT, "/user/**").hasAuthority(USER_WRITE.getPermission())
-//                .antMatchers("/user/**").hasAnyRole(USER.name(),ADMIN.name())
-//                .antMatchers("/admin/**").hasRole(ADMIN.name())
                 .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+                .authenticated();
     }
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
     @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails user1 = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("test"))
-//                .roles(ADMIN.name()) //ROLE_ADMIN
-                .authorities(ADMIN.getGrantedAuthority())
-                .build();
-
-         UserDetails user2 = User.builder()
-                .username("user")
-                .password(passwordEncoder.encode("test"))
-//                .roles(USER.name()) //ROLE_USER
-                 .authorities(USER.getGrantedAuthority())
-                .build();
-
-        return new InMemoryUserDetailsManager(user1,user2);
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(applicationUserService);
+        return provider;
     }
 }
 
