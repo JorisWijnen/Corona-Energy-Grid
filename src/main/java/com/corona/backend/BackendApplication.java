@@ -1,13 +1,11 @@
 
 package com.corona.backend;
 
-import com.corona.backend.models.Role;
 import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
 import com.corona.backend.repositories.RoleRepository;
 import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.repositories.UserRepository;
-import com.corona.backend.utils.AuthenticationUtils;
 import com.corona.backend.utils.RandomString;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +17,9 @@ import java.io.FileReader;
 import java.util.*;
 import java.io.BufferedReader;
 import com.corona.backend.utils.CsvValues;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static com.corona.backend.security.ApplicationUserRole.*;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class BackendApplication {
@@ -33,7 +34,7 @@ public class BackendApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository userRepository, RoleRepository roleRepository, StatusRepository statusRepository){
+    public CommandLineRunner demo(PasswordEncoder passwordEncoder,UserRepository userRepository, RoleRepository roleRepository, StatusRepository statusRepository){
         return args -> {
 
             RandomString rdm = new RandomString();
@@ -44,30 +45,9 @@ public class BackendApplication {
             String value2 = reader.readLine();
             String[] data1 = value1.split(",");
             String[] data2 = value2.split(",");
-            User user1 = new User("victor","victory","fontys123","test@test.com", "0773077070", "0612345678", data1[CsvValues.ZIPCODE.getValue()], data1[CsvValues.STREET.getValue()], data1[CsvValues.CITY.getValue()], data1[CsvValues.HOUSE_NUMBER.getValue()],"123456"); //default
-            User user2 = new User("Piet","Pieters","fobba123","test@test.nl", "0773086060", "0687654321",data2[CsvValues.ZIPCODE.getValue()],data2[CsvValues.STREET.getValue()], data2[CsvValues.CITY.getValue()], data2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8)); //default
+            User user1 = new User("victor","victory",passwordEncoder.encode("test2"),"test@test.com", "0773077070", "0612345678", data1[CsvValues.ZIPCODE.getValue()], data1[CsvValues.STREET.getValue()], data1[CsvValues.CITY.getValue()], data1[CsvValues.HOUSE_NUMBER.getValue()],"123456",true,true,true,true, USER.getGrantedAuthorities()); //default
+            User user2 = new User("Piet","Pieters",passwordEncoder.encode("test1"),"test@test.nl", "0773086060", "0687654321",data2[CsvValues.ZIPCODE.getValue()],data2[CsvValues.STREET.getValue()], data2[CsvValues.CITY.getValue()], data2[CsvValues.HOUSE_NUMBER.getValue()], rdm.getAlphaNumericString(8),true,true,true,true, USER.getGrantedAuthorities()); //default
 
-
-
-
-            Role adminrole = new Role();
-            Role defaultrole = new Role();
-            adminrole.setName("ADMIN_USER");
-            defaultrole.setName("DEFAULT_USER");
-            Set<Role> roles1 = new HashSet<>();
-            Set<Role> roles2 = new HashSet<>();
-
-            roles1.add(adminrole);
-            roles2.add(defaultrole);
-
-            user1.setRoles(roles1);
-            user2.setRoles(roles2);
-
-            user1.setPassword(new AuthenticationUtils().encode(user1.getPasswordHash()));
-            user2.setPassword(new AuthenticationUtils().encode(user2.getPasswordHash()));
-
-            roleRepository.save(adminrole);
-            roleRepository.save(defaultrole);
 
 
             Status status1 = new Status();
@@ -105,6 +85,8 @@ public class BackendApplication {
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
+            User test = userRepository.findUserByCustomerCode(user1.getCustomerCode());
+            System.out.println(test.getAuthorities());
         };
     }
 

@@ -26,6 +26,7 @@ public class ApplicationUser implements UserDetails {
         this.grantedAuthorities = grantedAuthorities;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return grantedAuthorities;

@@ -1,5 +1,6 @@
 package com.corona.backend.security.jwt;
 
+import com.corona.backend.models.CustomGrantedAuthority;
 import com.google.common.base.Strings;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -59,8 +60,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             var authorities = (List<Map<String, String>>) body.get("authorities");
 
-            Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
-                    .map(m -> new SimpleGrantedAuthority(m.get("authority")))
+            Set<CustomGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
+                    .map(m -> new CustomGrantedAuthority(m.get("authority")))
                     .collect(Collectors.toSet());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(

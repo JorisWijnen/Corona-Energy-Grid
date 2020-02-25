@@ -1,5 +1,6 @@
 package com.corona.backend.security;
 
+import com.corona.backend.models.CustomGrantedAuthority;
 import com.google.common.collect.Sets;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,11 +24,12 @@ public enum ApplicationUserRole {
     public Set<ApplicationUserPermission> getPermissions() {
         return permissions;
     }
-    public Set<SimpleGrantedAuthority> getGrantedAuthorities(){
-        Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+
+    public Set<CustomGrantedAuthority> getGrantedAuthorities(){
+        Set<CustomGrantedAuthority> permissions = getPermissions().stream()
+                .map(permission -> new CustomGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toSet());
-        permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        permissions.add(new CustomGrantedAuthority("ROLE_" + this.name()));
         return permissions;
     }
 }

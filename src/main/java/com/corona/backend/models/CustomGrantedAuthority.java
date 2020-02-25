@@ -1,21 +1,23 @@
 package com.corona.backend.models;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
-public class Role {
+@Table(name = "auth")
+public class CustomGrantedAuthority implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="role_name")
+    @Column(name="auth_name")
     private String name;
 
-    public Role() { }
+    public CustomGrantedAuthority() { }
 
-    public Role(String name) {
+    public CustomGrantedAuthority(String name) {
         this.name = name;
     }
 
@@ -25,5 +27,10 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getAuthority() {
+        return name;
     }
 }
