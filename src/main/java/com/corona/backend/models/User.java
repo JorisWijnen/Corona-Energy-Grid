@@ -88,17 +88,7 @@ public class User implements UserDetails {
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.customGrantedAuthorities = customGrantedAuthorities;
-       // grantedAuthorities.forEach((auth) -> roles.add(ConvertAuthorityToRole(auth)) );
     }
-
-//    private Role ConvertAuthorityToRole(GrantedAuthority auth){
-//        Role role = new Role(auth.getAuthority());
-//        return role;
-//    }
-//    private SimpleGrantedAuthority ConvertRoleToAuthority(Role role){
-//        SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role.getName());
-//        return auth;
-//    }
 
     public User(){
     }

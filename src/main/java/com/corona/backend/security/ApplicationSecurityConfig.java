@@ -1,6 +1,5 @@
 package com.corona.backend.security;
 
-import com.corona.backend.security.auth.ApplicationUserService;
 import com.corona.backend.security.auth.CustomUserDetailsService;
 import com.corona.backend.security.jwt.JwtConfig;
 import com.corona.backend.security.jwt.JwtTokenVerifier;
@@ -25,15 +24,13 @@ import javax.crypto.SecretKey;
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-    private final ApplicationUserService applicationUserService;
     private final CustomUserDetailsService customUserDetailsService;
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
 
     @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService, CustomUserDetailsService customUserDetailsService, SecretKey secretKey, JwtConfig jwtConfig){
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService, SecretKey secretKey, JwtConfig jwtConfig){
         this.passwordEncoder = passwordEncoder;
-        this.applicationUserService = applicationUserService;
         this.secretKey = secretKey;
         this.jwtConfig = jwtConfig;
         this.customUserDetailsService = customUserDetailsService;

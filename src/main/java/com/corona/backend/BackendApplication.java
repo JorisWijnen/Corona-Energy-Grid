@@ -85,8 +85,6 @@ public class BackendApplication {
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
-            User test = userRepository.findUserByCustomerCode(user1.getCustomerCode());
-            System.out.println(test.getAuthorities());
         };
     }
 
