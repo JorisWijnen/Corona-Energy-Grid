@@ -3,7 +3,7 @@ package com.corona.backend;
 
 import com.corona.backend.models.Status;
 import com.corona.backend.models.User;
-import com.corona.backend.repositories.RoleRepository;
+import com.corona.backend.repositories.AuthorityRepository;
 import com.corona.backend.repositories.StatusRepository;
 import com.corona.backend.repositories.UserRepository;
 import com.corona.backend.utils.RandomString;
@@ -34,7 +34,7 @@ public class BackendApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(PasswordEncoder passwordEncoder,UserRepository userRepository, RoleRepository roleRepository, StatusRepository statusRepository){
+    public CommandLineRunner demo(PasswordEncoder passwordEncoder, UserRepository userRepository, AuthorityRepository authorityRepository, StatusRepository statusRepository){
         return args -> {
 
             RandomString rdm = new RandomString();
