@@ -30,6 +30,9 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+
+    @RequestMapping(value = RestURIConstant.test, method = RequestMethod.GET)
+    public String test(){ return "Test works";}
     @RequestMapping(value = RestURIConstant.newUser, method = RequestMethod.POST)
     public @ResponseBody
     User newUser(@RequestBody User user) {
@@ -75,6 +78,7 @@ public class UserController {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userService.getCurrentUser(auth, returnType);
     }
+
 
     @PostMapping(value = RestURIConstant.userRegistration)
     public @ResponseBody String userRegister(@RequestBody String user) {
