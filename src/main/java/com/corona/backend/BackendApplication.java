@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.util.*;
 import java.io.BufferedReader;
 import com.corona.backend.utils.CsvValues;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.corona.backend.security.ApplicationUserRole.*;
@@ -31,6 +32,11 @@ public class BackendApplication {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean
