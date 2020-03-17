@@ -48,13 +48,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
+                .headers().frameOptions().disable().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/","index","/css/*","/js/*","/public/**","/h2-console/**").permitAll()
+                .antMatchers("/","index","/css/*","/js/*","/public/**","/console/*").permitAll()
                 .anyRequest()
                 .authenticated();
     }
